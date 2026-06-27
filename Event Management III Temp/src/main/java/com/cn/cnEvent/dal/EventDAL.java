@@ -19,9 +19,9 @@ public interface EventDAL {
 
 	List<Event> getEventsByLocation(String location);
 
-	void deleteEventDetailsbyEventId(Long id);
-
 	EventScheduleDetail getEventDetailByEventId(Long id);
+
+	String deleteEventDetails(Long id);
 
 //	EventScheduleDetail
 }

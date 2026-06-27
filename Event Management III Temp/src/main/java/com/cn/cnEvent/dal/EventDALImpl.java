@@ -67,9 +67,46 @@ public class EventDALImpl implements EventDAL {
     }
 
     @Override
-    public void deleteEventDetailsbyEventId(Long id) {
+    public String deleteEventDetails(Long id) {
         //todo
-        //        Event
+//        Event event = getById(id);
+//        EventScheduleDetail eventScheduleDetail = event.getEventScheduleDetail();
+//        event.setEventScheduleDetail(null);
+//        save(event);
+//
+//        Session session = entityManager.unwrap(Session.class);
+//        session.delete(eventScheduleDetail);
+//        return "The event detail is successfully deleted";
+
+//        New
+//        Session session = entityManager.unwrap(Session.class);
+//        EventScheduleDetail detail = session
+//                .createQuery("select e from EventScheduleDetail e where e.id=:id", EventScheduleDetail.class)
+//                .setParameter("id", id).getSingleResult();
+//        for (Event event: getAllEvents()) {
+//            if (event.getEventScheduleDetail() != null && event.getEventScheduleDetail().getId().equals(id)) {
+//                event.setEventScheduleDetail(null);
+//                save(event);
+//            }
+//        }
+//        session.delete(detail);
+
+        Session session = entityManager.unwrap(Session.class);
+        EventScheduleDetail detail = session
+                .createQuery("select detail from EventScheduleDetail detail where detail.id=:id", EventScheduleDetail.class)
+                .setParameter("id", id)
+                .getSingleResult();
+
+        for (Event event: getAllEvents()) {
+            if (event.getEventScheduleDetail().getId().equals(id)) {
+                event.setEventScheduleDetail(null);
+                save(event);
+            }
+        }
+
+        session.delete(detail);
+//        return "Event detail deleted successfully";
+        return "The eventSchedule was deleted successfully";
     }
 
     @Override

@@ -53,8 +53,8 @@ public class EventController {
 	}
 
 	@DeleteMapping("/delete/eventScheduleDetail/{id}")
-	public void deleteDetails(@PathVariable Long id) {
-		eventService.deleteEventDetailsbyEventId(id);
+	public String deleteDetails(@PathVariable Long id) {
+		return eventService.deleteEventDetails(id);
 //		eventScheduleDetailService.delete(id);
 	}
 

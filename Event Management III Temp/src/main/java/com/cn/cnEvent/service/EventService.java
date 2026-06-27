@@ -96,9 +96,10 @@ public class EventService {
 		return list;
 	}
 
-	public void deleteEventDetailsbyEventId(Long id) {
+	public String deleteEventDetails(Long id) {
 		try {
-			eventDAL.deleteEventDetailsbyEventId(id);
+			String out = eventDAL.deleteEventDetails(id);
+			return out;
 		}catch (Exception e) {
 			throw new InvalidInputException("invalid input");
 		}
@@ -109,4 +110,6 @@ public class EventService {
 		if (e==null) throw new NotFoundException("No Event Details faound");
 		return e;
 	}
+
+
 }

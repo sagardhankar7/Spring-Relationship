@@ -26,24 +26,28 @@ public class EventScheduleDetailService {
     @Transactional
     public List<EventScheduleDetail> getAll() {
         List<EventScheduleDetail> list = eventScheduleDetailDAL.getAll();
-        if (list.isEmpty()) throw new NotFoundException("No Detials found");
+        if (list==null) throw new NotFoundException("No Detials found");
         return list;
     }
 
     @Transactional
     public String save(EventScheduleDetail e) {
-        EventScheduleDetail eDetail = eventScheduleDetailDAL.getById(e.getId());
-        if (eDetail!=null) throw new ElementAlreadyExistException("EventDetail already present");
+//        EventScheduleDetail eDetail = eventScheduleDetailDAL.getById(e.getId());
+//        if (eDetail!=null) throw new ElementAlreadyExistException("EventDetail already present");
+        List<EventScheduleDetail> list = getAll();
+        for (EventScheduleDetail detail: list) {
+            if (detail.getId()==e.getId()) throw new ElementAlreadyExistException("Element already present");
+        }
         return eventScheduleDetailDAL.save(e);
     }
 
-    @Transactional
-    public void delete(Long id) {
-        eventScheduleDetailDAL.delete(id);
-    }
-
-    public List<Event> getByLocation(String location) {
-//        eventScheduleDetailDAL
-        return List.of();
-    }
+//    @Transactional
+//    public void delete(Long id) {
+//        eventScheduleDetailDAL.delete(id);
+//    }
+//
+//    public List<Event> getByLocation(String location) {
+////        eventScheduleDetailDAL
+//        return List.of();
+//    }
 }
