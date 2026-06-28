@@ -2,6 +2,7 @@ package com.cn.cnEvent.controller;
 
 import com.cn.cnEvent.entity.Event;
 import com.cn.cnEvent.entity.EventScheduleDetail;
+import com.cn.cnEvent.entity.Ticket;
 import com.cn.cnEvent.service.EventScheduleDetailService;
 import com.cn.cnEvent.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class EventController {
 	}
 
 	@PostMapping("/save")
+	//todo how to add ticket save logic
 	public String saveEvent(@RequestBody Event event) {
 		return eventService.saveEvent(event);
 	}
@@ -63,5 +65,17 @@ public class EventController {
 		return eventService.getEventsByLocation(location);
 //		List<Event> list = eventScheduleDetailService.getByLocation(location);
 //		return list;
+	}
+
+	@GetMapping("/allTickets/{eventId}")
+	public List<Ticket> getAllTicket(@PathVariable Long eventId) {
+//		todo whynot: return getEventById(eventId).getTickets()
+		return eventService.getAllAssociatedTickets(eventId);
+	}
+
+	@GetMapping("/tickets/PriceGreaterThan/{price}")
+	public List<Event> filterEventByTicketPrice(@PathVariable Long price) {
+//		List<Event> list = getAllEvents();
+		return eventService.filteredEventByTicketPriceHigher(price);
 	}
 }

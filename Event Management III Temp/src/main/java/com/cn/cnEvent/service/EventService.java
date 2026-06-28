@@ -1,14 +1,17 @@
 package com.cn.cnEvent.service;
 
 import com.cn.cnEvent.dal.EventDAL;
+import com.cn.cnEvent.dal.TicketDAL;
 import com.cn.cnEvent.entity.Event;
 import com.cn.cnEvent.entity.EventScheduleDetail;
+import com.cn.cnEvent.entity.Ticket;
 import com.cn.cnEvent.exception.ElementAlreadyExistException;
 import com.cn.cnEvent.exception.InvalidInputException;
 import com.cn.cnEvent.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -112,4 +115,24 @@ public class EventService {
 	}
 
 
+	public List<Ticket> getAllAssociatedTickets(Long eventId) {
+		Event event = getEventById(eventId);
+		return event.getTickets();
+	}
+
+	public List<Event> filteredEventByTicketPriceHigher(Long price) {
+		List<Event> list = getAllEvents();
+		List<Event> result = new ArrayList<>();
+
+		for (Event event: list) {
+			List<Ticket> tickets = event.getTickets();
+			for (Ticket ticket: tickets) {
+				if (ticket.getPrice() > price) {
+					result.add(event);
+					break;
+				}
+			}
+		}
+		return result;
+	}
 }

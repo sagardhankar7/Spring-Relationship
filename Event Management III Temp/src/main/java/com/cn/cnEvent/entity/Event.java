@@ -1,6 +1,7 @@
 package com.cn.cnEvent.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Event {
@@ -13,6 +14,17 @@ public class Event {
 
 	public void setEventScheduleDetail(EventScheduleDetail eventScheduleDetail) {
 		this.eventScheduleDetail = eventScheduleDetail;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL)
+    List<Ticket> ticket;
+
+	public List<Ticket> getTickets() {
+		return ticket;
+	}
+
+	public void setTickets(List<Ticket> ticket) {
+		this.ticket = ticket;
 	}
 
 	@Id
