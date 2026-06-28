@@ -17,14 +17,26 @@ public class Event {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL)
-    List<Ticket> ticket;
+    List<Ticket> tickets;
 
 	public List<Ticket> getTickets() {
-		return ticket;
+		return tickets;
 	}
 
 	public void setTickets(List<Ticket> ticket) {
-		this.ticket = ticket;
+		this.tickets = ticket;
+	}
+
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@JoinTable(name = "event_speaker", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "speaker_id"))
+	List<Speaker> speakers;
+
+	public List<Speaker> getSpeakers() {
+		return speakers;
+	}
+
+	public void setSpeakers(List<Speaker> speakers) {
+		this.speakers = speakers;
 	}
 
 	@Id
